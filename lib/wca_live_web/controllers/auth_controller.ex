@@ -47,6 +47,6 @@ defmodule WcaLiveWeb.AuthController do
     defp redirect_to_app(conn, to: path), do: redirect(conn, to: path)
   else
     defp redirect_to_app(conn, to: path),
-      do: redirect(conn, external: "http://localhost:3000" <> path)
+      do: redirect(conn, external: "http://localhost:3001" <> path)
   end
 end

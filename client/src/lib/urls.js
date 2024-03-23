@@ -1,10 +1,10 @@
 const production = import.meta.env.PROD;
 
-const ORIGIN = production ? "" : "http://localhost:4000";
+const ORIGIN = production ? "http://localhost:4000" : "http://localhost:4000";
 
 const WCA_ORIGIN = production
   ? "https://www.worldcubeassociation.org"
-  : "https://staging.worldcubeassociation.org";
+  : "http://0.0.0.0:3000";
 
 const GROUPIFIER_ORIGIN = "https://groupifier.jonatanklosko.com";
 

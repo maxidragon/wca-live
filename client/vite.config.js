@@ -10,7 +10,7 @@ export default defineConfig({
     emptyOutDir: true,
   },
   server: {
-    port: 3000,
+    port: 3001,
     host: true,
     proxy: {
       "/auth": "http://127.0.0.1:4000",
