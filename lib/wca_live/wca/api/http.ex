@@ -52,7 +52,7 @@ defmodule WcaLive.Wca.Api.Http do
   @impl true
   def get_records() do
     api_url("/records")
-    |> HTTPoison.get(headers())
+    |> HTTPoison.get(headers(), [recv_timeout: 10_000])
     |> parse_response()
   end
 

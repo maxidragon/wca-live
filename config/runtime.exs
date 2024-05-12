@@ -45,12 +45,7 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base
 
-  wca_host =
-    System.get_env("WCA_HOST") ||
-      raise """
-      environment variable WCA_HOST is missing
-      """
-
+  wca_host = "http://localhost:3000"
   wca_oauth_client_id =
     System.get_env("WCA_OAUTH_CLIENT_ID") ||
       raise """
@@ -65,15 +60,15 @@ if config_env() == :prod do
 
   # Configure WCA OAuth.
   config :wca_live, WcaLive.Wca.OAuth,
-    redirect_uri: "https://#{host}/oauth/callback",
-    authorize_url: "https://#{wca_host}/oauth/authorize",
-    token_url: "https://#{wca_host}/oauth/token",
+    redirect_uri: "http://#{host}/oauth/callback",
+    authorize_url: "http://#{wca_host}/oauth/authorize",
+    token_url: "http://#{wca_host}/oauth/token",
     client_id: wca_oauth_client_id,
     client_secret: wca_oauth_client_secret
 
   # Use a real version of the WCA API, talking to an actual server.
   config :wca_live, :wca_api, WcaLive.Wca.Api.Http
-  config :wca_live, WcaLive.Wca.Api.Http, api_url: "https://#{wca_host}/api/v0"
+  config :wca_live, WcaLive.Wca.Api.Http, api_url: "http://#{wca_host}/api/v0"
 
   if dns_query = System.get_env("CLUSTER_DNS_QUERY") do
     config :libcluster,
