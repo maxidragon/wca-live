@@ -47,9 +47,9 @@ config :wca_live, WcaLive.Wca.OAuth,
   client_id: "example-application-id",
   client_secret: "example-secret",
   redirect_uri: "http://localhost:4000/oauth/callback",
-  authorize_url: "http://localhost:3000/oauth/authorize",
-  token_url: "http://localhost:3000/oauth/token"
+  authorize_url: "http://0.0.0.0:3000/oauth/authorize",
+  token_url: "http://0.0.0.0:3000/oauth/token"
 
 # Use a real version of the WCA API, talking to the staging server.
 config :wca_live, :wca_api, WcaLive.Wca.Api.Http
-config :wca_live, WcaLive.Wca.Api.Http, api_url: "http://localhost:3000/api/v0"
+config :wca_live, WcaLive.Wca.Api.Http, api_url: "http://0.0.0.0:3000/api/v0"

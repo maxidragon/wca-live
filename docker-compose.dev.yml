@@ -17,7 +17,7 @@ services:
     depends_on:
       - database
     environment:
-      - DB_HOST=localhost
+      - DB_HOST=127.0.0.1
     volumes:
       - ./:/app
     network_mode: host
