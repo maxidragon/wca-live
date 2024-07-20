@@ -3,6 +3,8 @@ version: "3.8"
 services:
   database:
     image: postgres:12.4
+    ports:
+      - "5432:5432"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -15,11 +17,9 @@ services:
     depends_on:
       - database
     environment:
-      - DB_HOST=database
+      - DB_HOST=localhost
     volumes:
       - ./:/app
-    ports:
-      - "4000:4000"
-      - "3000:3000"
+    network_mode: host
     # Don't run as root, so that generated files have the correct user
     user: ${UID:-1000}:${GID:-1000}
