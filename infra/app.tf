@@ -328,7 +328,7 @@ resource "aws_appautoscaling_policy" "this" {
       predefined_metric_type = "ECSServiceAverageCPUUtilization"
     }
 
-    target_value = 60
+    target_value = 40
   }
 
   depends_on = [aws_appautoscaling_target.this]
@@ -346,7 +346,7 @@ data "aws_ami" "ecs" {
 
   filter {
     name   = "name"
-    values = ["amzn2-ami-ecs-hvm-*-x86_64-*"]
+    values = ["al2023-ami-ecs-hvm-*-x86_64"]
   }
 }
 

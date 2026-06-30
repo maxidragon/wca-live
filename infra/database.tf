@@ -55,7 +55,7 @@ resource "aws_db_instance" "this" {
   instance_class    = "db.t4g.medium"
 
   engine                      = "postgres"
-  engine_version              = "16.8"
+  engine_version              = "16.13"
   auto_minor_version_upgrade  = true
   db_name                     = var.db_name
   username                    = var.db_username
