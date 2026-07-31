@@ -61,7 +61,9 @@ function CompetitorList({ competitors, competitionId }) {
                   size="lg"
                 />
               </ListItemIcon>
-              <ListItemText primary={competitor.name} />
+              <ListItemText
+                primary={<span translate="no">{competitor.name}</span>}
+              />
             </ListItemButton>
           ))}
         </List>

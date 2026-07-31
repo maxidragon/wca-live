@@ -268,7 +268,10 @@ function ResultsProjector({
                     >
                       {result.ranking}
                     </TableCell>
-                    <TableCell sx={{ ...styles.cell, ...styles.name }}>
+                    <TableCell
+                      sx={{ ...styles.cell, ...styles.name }}
+                      translate="no"
+                    >
                       {result.person.name}
                     </TableCell>
                     <TableCell sx={styles.cell} align="center">

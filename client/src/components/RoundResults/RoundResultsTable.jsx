@@ -116,7 +116,10 @@ const RoundResultsTable = memo(
                 >
                   {result.ranking}
                 </TableCell>
-                <TableCell sx={{ ...styles.cell, ...styles.name }}>
+                <TableCell
+                  sx={{ ...styles.cell, ...styles.name }}
+                  translate="no"
+                >
                   {smScreen ? (
                     <Link
                       component={RouterLink}

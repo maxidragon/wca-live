@@ -103,7 +103,7 @@ const AdminCompetitorsTable = memo(
                   }}
                 >
                   <TableCell align="right">{person.registrantId}</TableCell>
-                  <TableCell>
+                  <TableCell translate="no">
                     <Link
                       component={RouterLink}
                       to={`/competitions/${competitionId}/competitors/${person.id}`}

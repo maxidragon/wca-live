@@ -35,13 +35,16 @@ function RoundResultDialog({
       {!!result && (
         <>
           <DialogTitle>
-            {result.person.name} {result.ranking && `#${result.ranking}`}
+            <span translate="no">{result.person.name}</span>{" "}
+            {result.ranking && `#${result.ranking}`}
           </DialogTitle>
           <DialogContent>
             <Grid container direction="column" spacing={2}>
               <Grid item>
                 <Typography variant="subtitle2">Name</Typography>
-                <Typography variant="body2">{result.person.name}</Typography>
+                <Typography variant="body2" translate="no">
+                  {result.person.name}
+                </Typography>
                 <Link
                   component={RouterLink}
                   to={`/competitions/${competitionId}/competitors/${result.person.id}`}

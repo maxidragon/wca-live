@@ -35,7 +35,7 @@ function ResultMenu({
         transformOrigin={{ vertical: 0, horizontal: "center" }}
         MenuListProps={{
           subheader: (
-            <ListSubheader sx={{ backgroundColor: "inherit" }}>
+            <ListSubheader sx={{ backgroundColor: "inherit" }} translate="no">
               {result && result.person.name}
             </ListSubheader>
           ),

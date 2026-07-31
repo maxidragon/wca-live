@@ -137,7 +137,7 @@ const AdminResultsTable = memo(
               <TableCell align="right">{result.person.registrantId}</TableCell>
               <TableCell>
                 <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                  <div>{result.person.name}</div>
+                  <div translate="no">{result.person.name}</div>
                   {!result.person.wcaId && (
                     <div style={{ display: "flex" }}>
                       <Tooltip title="Newcomer" placement="right">

@@ -41,7 +41,12 @@ function RecordList({ title, records }) {
                   </Box>
                 </span>
               }
-              secondary={`${record.result.person.name} from ${record.result.person.country.name}`}
+              secondary={
+                <>
+                  <span translate="no">{record.result.person.name}</span> from{" "}
+                  {record.result.person.country.name}
+                </>
+              }
             />
           </ListItemButton>
         ))}

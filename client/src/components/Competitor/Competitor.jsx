@@ -68,7 +68,8 @@ function Competitor() {
       <Grid container alignContent="center" sx={{ mb: 2 }}>
         <Grid item>
           <Typography variant="h5">
-            {person.name} <FlagIcon code={person.country.iso2.toLowerCase()} />
+            <span translate="no">{person.name}</span>{" "}
+            <FlagIcon code={person.country.iso2.toLowerCase()} />
           </Typography>
         </Grid>
         <Grid item sx={{ flexGrow: 1 }} />

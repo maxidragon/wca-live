@@ -49,6 +49,11 @@ function PersonSelect({
       filterOptions={(persons, { inputValue }) =>
         searchPersons(persons, inputValue)
       }
+      renderOption={(props, person) => (
+        <li {...props} key={person.id} translate="no">
+          {personToLabel(person)}
+        </li>
+      )}
       renderInput={(params) => (
         <TextField
           {...params}

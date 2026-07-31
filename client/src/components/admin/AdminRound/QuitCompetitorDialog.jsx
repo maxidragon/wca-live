@@ -79,14 +79,15 @@ const QuitCompetitorDialog = ({ open, onClose, competitor, roundId }) => {
     <Dialog open={open} onClose={onClose}>
       {loading && <Loading />}
       <DialogTitle>
-        Quit {competitor && competitor && competitor.name}
+        Quit <span translate="no">{competitor && competitor.name}</span>
       </DialogTitle>
       <DialogContent>
         {error && <Error error={error} />}
         {data && (
           <>
             <DialogContentText>
-              Going to permanently remove {competitor && competitor.name} from
+              Going to permanently remove{" "}
+              <span translate="no">{competitor && competitor.name}</span> from
               this round. Are you sure you want to proceed?
             </DialogContentText>
             <RadioGroup
@@ -97,24 +98,44 @@ const QuitCompetitorDialog = ({ open, onClose, competitor, roundId }) => {
                 <FormControlLabel
                   control={<Radio />}
                   value="yes"
-                  label={`
-                    Yes, remove ${competitor && competitor.name}
-                    and replace them with other qualifying competitors:
-                    ${data.round.nextQualifying
-                      .map(({ name }) => name)
-                      .join(", ")}.
-                  `}
+                  label={
+                    <>
+                      Yes, remove{" "}
+                      <span translate="no">
+                        {competitor && competitor.name}
+                      </span>{" "}
+                      and replace them with other qualifying competitors:{" "}
+                      <span translate="no">
+                        {data.round.nextQualifying
+                          .map(({ name }) => name)
+                          .join(", ")}
+                      </span>
+                      .
+                    </>
+                  }
                 />
               )}
               <FormControlLabel
                 control={<Radio />}
                 value="no"
                 label={
-                  data.round.nextQualifying.length > 0
-                    ? `Yes, just remove ${
-                        competitor && competitor.name
-                      } and don't replace them.`
-                    : `Yes, remove ${competitor && competitor.name}.`
+                  data.round.nextQualifying.length > 0 ? (
+                    <>
+                      Yes, just remove{" "}
+                      <span translate="no">
+                        {competitor && competitor.name}
+                      </span>{" "}
+                      and don't replace them.
+                    </>
+                  ) : (
+                    <>
+                      Yes, remove{" "}
+                      <span translate="no">
+                        {competitor && competitor.name}
+                      </span>
+                      .
+                    </>
+                  )
                 }
               />
             </RadioGroup>
