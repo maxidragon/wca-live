@@ -15,7 +15,10 @@ const SCHEDULE_DATE_KEY = "scheduleDate";
 function getStoredScheduleDate(competitionId, dates) {
   try {
     const stored = JSON.parse(sessionStorage.getItem(SCHEDULE_DATE_KEY));
-    if (stored?.competitionId === competitionId && dates.includes(stored?.date)) {
+    if (
+      stored?.competitionId === competitionId &&
+      dates.includes(stored?.date)
+    ) {
       return stored.date;
     }
   } catch {}
@@ -52,10 +55,13 @@ function Schedule({ venues, competitionEvents, competitionId }) {
   const dateParam = searchParams.get("date");
   const selectedDate = dates.includes(dateParam)
     ? dateParam
-    : getStoredScheduleDate(competitionId, dates) ?? closestDateString(dates);
+    : (getStoredScheduleDate(competitionId, dates) ?? closestDateString(dates));
 
   function setSelectedDate(date) {
-    sessionStorage.setItem(SCHEDULE_DATE_KEY, JSON.stringify({ competitionId, date }));
+    sessionStorage.setItem(
+      SCHEDULE_DATE_KEY,
+      JSON.stringify({ competitionId, date }),
+    );
     const newSearchParams = new URLSearchParams(searchParams);
     newSearchParams.set("date", date);
     // Replace the current history entry, so that switching between days
