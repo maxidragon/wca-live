@@ -9,7 +9,18 @@ import {
 } from "../../lib/date";
 import { eventRoundForActivityCode } from "../../lib/competition";
 import { parseActivityCode } from "../../lib/activity-code";
-import { useScheduleDate } from "../../hooks/useScheduleDate";
+
+const SCHEDULE_DATE_KEY = "scheduleDate";
+
+function getStoredScheduleDate(competitionId, dates) {
+  try {
+    const stored = JSON.parse(sessionStorage.getItem(SCHEDULE_DATE_KEY));
+    if (stored?.competitionId === competitionId && dates.includes(stored?.date)) {
+      return stored.date;
+    }
+  } catch {}
+  return null;
+}
 
 function Schedule({ venues, competitionEvents, competitionId }) {
   const activities = venues
@@ -37,22 +48,19 @@ function Schedule({ venues, competitionEvents, competitionId }) {
   // We keep the selected date in the URL, so that it's preserved
   // when the user navigates to a round and goes back.
   const [searchParams, setSearchParams] = useSearchParams();
-  const [, setScheduleDate] = useScheduleDate();
 
   const dateParam = searchParams.get("date");
   const selectedDate = dates.includes(dateParam)
     ? dateParam
-    : closestDateString(dates);
+    : getStoredScheduleDate(competitionId, dates) ?? closestDateString(dates);
 
   function setSelectedDate(date) {
+    sessionStorage.setItem(SCHEDULE_DATE_KEY, JSON.stringify({ competitionId, date }));
     const newSearchParams = new URLSearchParams(searchParams);
     newSearchParams.set("date", date);
     // Replace the current history entry, so that switching between days
     // doesn't require going back once per switch.
     setSearchParams(newSearchParams, { replace: true });
-    // Remember the choice, so that links back to the competition home
-    // (like the competition name in the toolbar) point at this day.
-    setScheduleDate(date);
   }
 
   const selectedDateActivities = sortedActivities.filter(

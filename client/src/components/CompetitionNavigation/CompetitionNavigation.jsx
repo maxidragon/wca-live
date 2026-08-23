@@ -9,7 +9,6 @@ import Podiums from "../Podiums/Podiums";
 import Error from "../Error/Error";
 import CompetitionLayout from "./CompetitionLayout";
 import Loading from "../Loading/Loading";
-import ScheduleDateProvider from "./ScheduleDateProvider";
 
 const COMPETITION_QUERY = gql`
   query Competition($id: ID!) {
@@ -54,28 +53,25 @@ function CompetitionNavigation() {
   const competition = data ? data.competition : null;
 
   return (
-    // Reset the remembered schedule date when switching competitions.
-    <ScheduleDateProvider key={competitionId}>
-      <CompetitionLayout competition={competition}>
-        {loading && <Loading />}
-        {competition && (
-          <Helmet>
-            <title>{competition.shortName} - WCA Live</title>
-          </Helmet>
-        )}
-        <Routes>
-          <Route path="" element={<CompetitionHome />} />
-          <Route path="rounds/:roundId/*" element={<Round />} />
-          <Route path="competitors" element={<Competitors />} />
-          <Route path="competitors/:competitorId" element={<Competitor />} />
-          <Route path="podiums" element={<Podiums />} />
-          <Route
-            path="*"
-            element={<Navigate to={`/competitions/${competitionId}`} />}
-          />
-        </Routes>
-      </CompetitionLayout>
-    </ScheduleDateProvider>
+    <CompetitionLayout competition={competition}>
+      {loading && <Loading />}
+      {competition && (
+        <Helmet>
+          <title>{competition.shortName} - WCA Live</title>
+        </Helmet>
+      )}
+      <Routes>
+        <Route path="" element={<CompetitionHome />} />
+        <Route path="rounds/:roundId/*" element={<Round />} />
+        <Route path="competitors" element={<Competitors />} />
+        <Route path="competitors/:competitorId" element={<Competitor />} />
+        <Route path="podiums" element={<Podiums />} />
+        <Route
+          path="*"
+          element={<Navigate to={`/competitions/${competitionId}`} />}
+        />
+      </Routes>
+    </CompetitionLayout>
   );
 }
 

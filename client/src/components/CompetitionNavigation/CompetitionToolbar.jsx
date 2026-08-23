@@ -2,13 +2,9 @@ import { Link as RouterLink, useLocation } from "react-router-dom";
 import { Box, IconButton, Toolbar, Tooltip, Typography } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useScheduleDate } from "../../hooks/useScheduleDate";
 
 function CompetitionToolbar({ competition, onMenuClick }) {
   const location = useLocation();
-
-  // Link back to the schedule day the user was browsing, if any.
-  const [scheduleDate] = useScheduleDate();
 
   return (
     <Toolbar>
@@ -37,10 +33,7 @@ function CompetitionToolbar({ competition, onMenuClick }) {
         }}
         noWrap={true}
         component={RouterLink}
-        to={{
-          pathname: `/competitions/${competition.id}`,
-          search: scheduleDate ? `?date=${scheduleDate}` : "",
-        }}
+        to={`/competitions/${competition.id}`}
       >
         {competition.shortName}
       </Typography>
