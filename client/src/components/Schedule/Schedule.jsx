@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import { useState } from "react";
 import { Box, Grid, Tab, Tabs } from "@mui/material";
 import ScheduleCard from "./ScheduleCard";
 import { groupBy, uniq, orderBy } from "../../lib/utils";
@@ -9,21 +9,6 @@ import {
 } from "../../lib/date";
 import { eventRoundForActivityCode } from "../../lib/competition";
 import { parseActivityCode } from "../../lib/activity-code";
-
-const SCHEDULE_DATE_KEY = "scheduleDate";
-
-function getStoredScheduleDate(competitionId, dates) {
-  try {
-    const stored = JSON.parse(sessionStorage.getItem(SCHEDULE_DATE_KEY));
-    if (
-      stored?.competitionId === competitionId &&
-      dates.includes(stored?.date)
-    ) {
-      return stored.date;
-    }
-  } catch {}
-  return null;
-}
 
 function Schedule({ venues, competitionEvents, competitionId }) {
   const activities = venues
@@ -48,25 +33,16 @@ function Schedule({ venues, competitionEvents, competitionId }) {
     sortedActivities.map((activity) => toLocalDateString(activity.startTime)),
   );
 
-  // We keep the selected date in the URL, so that it's preserved
-  // when the user navigates to a round and goes back.
-  const [searchParams, setSearchParams] = useSearchParams();
+  // We store the selected date, so that it's preserved when the user
+  // navigates to a round and comes back.
+  const [selectedDate, setSelectedDate] = useState(
+    () =>
+      getStoredScheduleDate(competitionId, dates) ?? closestDateString(dates),
+  );
 
-  const dateParam = searchParams.get("date");
-  const selectedDate = dates.includes(dateParam)
-    ? dateParam
-    : (getStoredScheduleDate(competitionId, dates) ?? closestDateString(dates));
-
-  function setSelectedDate(date) {
-    sessionStorage.setItem(
-      SCHEDULE_DATE_KEY,
-      JSON.stringify({ competitionId, date }),
-    );
-    const newSearchParams = new URLSearchParams(searchParams);
-    newSearchParams.set("date", date);
-    // Replace the current history entry, so that switching between days
-    // doesn't require going back once per switch.
-    setSearchParams(newSearchParams, { replace: true });
+  function handleDateChange(date) {
+    setSelectedDate(date);
+    storeScheduleDate(competitionId, date);
   }
 
   const selectedDateActivities = sortedActivities.filter(
@@ -86,7 +62,7 @@ function Schedule({ venues, competitionEvents, competitionId }) {
           variant="scrollable"
           textColor="inherit"
           value={selectedDate}
-          onChange={(event, value) => setSelectedDate(value)}
+          onChange={(event, value) => handleDateChange(value)}
         >
           {dates.map((date) => (
             <Tab key={date} label={formatDateShort(date)} value={date} />
@@ -108,6 +84,30 @@ function Schedule({ venues, competitionEvents, competitionId }) {
         )}
       </Grid>
     </>
+  );
+}
+
+const SCHEDULE_DATE_KEY = "scheduleDate";
+
+function getStoredScheduleDate(competitionId, dates) {
+  try {
+    const stored = JSON.parse(sessionStorage.getItem(SCHEDULE_DATE_KEY));
+    if (
+      stored?.competitionId === competitionId &&
+      dates.includes(stored?.date)
+    ) {
+      return stored.date;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+function storeScheduleDate(competitionId, date) {
+  sessionStorage.setItem(
+    SCHEDULE_DATE_KEY,
+    JSON.stringify({ competitionId, date }),
   );
 }
 
